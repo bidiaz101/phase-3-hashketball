@@ -1,4 +1,6 @@
 # Write your code below game_hash
+require 'pry'
+
 def game_hash
   {
     home: {
@@ -127,3 +129,64 @@ def game_hash
 end
 
 # Write code here
+def num_points_scored(name)
+  game_hash.each do |location, team_data|
+    desired_hash = team_data[:players].find {|player_hash| player_hash[:player_name] == name}
+    if desired_hash
+      return desired_hash[:points]
+    end
+  end
+end
+
+def shoe_size(name)
+  game_hash.each do |location, team_data|
+    desired_hash = team_data[:players].find {|player_hash| player_hash[:player_name] == name}
+    if desired_hash
+      return desired_hash[:shoe]
+    end
+  end
+end
+
+def team_colors(team)
+  game_hash.each do |location, team_data|
+    if team_data[:team_name] == team
+      return team_data[:colors]
+    end
+  end
+end
+
+def team_names
+  teams = []
+  game_hash.each do |location, team_data|
+    teams << team_data[:team_name]
+  end
+  teams
+end
+
+def player_numbers(team)
+  numbers = []
+  game_hash.each do |location, team_data|
+    if team_data[:team_name] == team
+      team_data[:players].each {|player_hash| numbers << player_hash[:number]}
+    end
+  end
+  numbers
+end
+
+def player_stats(name)
+  game_hash.each do |location, team_data|
+    desired_hash = team_data[:players].find {|player_hash| player_hash[:player_name] == name}
+    if desired_hash
+      return desired_hash
+    end
+  end
+end
+
+def big_shoe_rebounds
+  shoes = []
+  game_hash.each do |location, team_data|
+    team_data[:players].each {|player_hash| shoes << player_hash[:shoe]}
+    desired_hash = team_data[:players].find {|player_hash| player_hash[:shoe] == shoes.max}
+    return desired_hash[:rebounds]
+  end
+end
